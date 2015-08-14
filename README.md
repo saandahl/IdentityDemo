@@ -6,5 +6,5 @@ to create and manage users and roles.
 Database must be restored from the App_Data to SQL and a IIS site must be setup.
 
 You can find more information here:
-http://sveinaandahl.blogspot.no/p/how-to-integrate-aspnet-identity-with.html
+http://sveinaandahl.blogspot.no/2015/08/admin-tool-for-aspnet-identity.html
 
