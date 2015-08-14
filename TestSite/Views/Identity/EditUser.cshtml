@@ -1,0 +1,31 @@
+﻿@model TestSite.Models.Account.ApplicationUser
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="epi-contentArea">
+    <h3 class="EP-prefix"> @ViewBag.Title</h3>
+    <p class="EP-systemInfo">@ViewBag.StatusMessage</p>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <p class="EP-systemInfo"> @Html.ValidationSummary() </p>
+    <div class="epi-size30">
+        @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="">
+            @Html.TextBoxFor(m => m.UserName, new { @class = "episize200" })
+            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <br />
+    <div class="epi-buttonContainer">
+        <span class="epi-cmsButton">
+            <input type="submit" class="epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Save" value="Save" />
+        </span>
+        <span class="epi-cmsButton">
+            @Html.ActionLink("Cancel", "Index", new { page = ViewBag.Page, searchString = ViewBag.SearchString }, new { @class = "epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Cancel" })
+        </span>
+    </div>
+}

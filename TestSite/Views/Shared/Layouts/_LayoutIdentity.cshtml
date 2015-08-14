@@ -1,0 +1,47 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/App_Themes/Default/Styles/system.css")" type="text/css" rel="stylesheet">
+    <link href="@Url.Content("~/App_Themes/Default/Styles/ToolButton.css")" type="text/css" rel="stylesheet">
+    <link href="@Url.Content("~/EPiServer/Shell/8.2.2.0/ClientResources/epi/themes/legacy/ShellCore.css")" rel="stylesheet" type="text/css">
+    <link href="@Url.Content("~/EPiServer/Shell/8.2.2.0/ClientResources/epi/themes/legacy/ShellCoreLightTheme.css")" rel="stylesheet" type="text/css">
+    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/jquery-1.8.0.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
+</head>
+
+<body id="body">
+    <div class="epi-contentContainer epi-padding">
+        <div class="epi-contentArea">
+            <h1 class="EP-prefix">Identity management</h1>
+            <p class="EP-systemInfo">Admin tool in EPiServer to handle ASP.NET Identity.</p>
+        </div>
+
+        <div id="menucontainer" class="epi-tabView">
+            <ul class="epi-tabView-navigation" id="tabs">
+                <li class="@Html.ActivePage("Identity", "Index")">@Html.ActionLink("Accounts overview", "Index", "Identity", new { @class = "epi-tabView-tab" })</li>
+                <li class="@Html.ActivePage("Identity", "Register")">@Html.ActionLink("Create User", "Register", "Identity", new { @class = "epi-tabView-tab" })</li>
+                <li class="@Html.ActivePage("Identity", "ManageRoles")">@Html.ActionLink("Manage Roles", "ManageRoles", "Identity", new { @class = "epi-tabView-tab" })</li>
+            </ul>
+        </div>
+
+        <div id="FullRegion_MainRegion_TabView" class="epi-paddingVertical">
+            <div id="ajaxBody">
+                @RenderBody()
+            </div>
+            <div id="footer">
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+

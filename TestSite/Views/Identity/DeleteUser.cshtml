@@ -1,0 +1,34 @@
+﻿@model TestSite.Models.Account.ApplicationUser
+@{
+    ViewBag.Title = "Delete account";
+    Layout = null; 
+}
+
+<div class="epi-contentArea">
+    <h3 class="EP-prefix"> @ViewBag.Title</h3>
+    <p class="EP-systemInfo">Are you sure you want to delete this user?</p>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <p class="text-success">@ViewBag.StatusMessage</p>
+    @Html.ValidationSummary()
+    <div class="epi-size15">
+        <div class="col-md-10">
+            <b>
+                @Html.DisplayFor(m => m.UserName, new {@class = "form-control"})
+            </b>
+        </div>
+    </div>
+    <br />
+
+    <div class="epi-buttonContainer">
+        <span class="epi-cmsButton">
+            <input type="submit" class="epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Save" value="Delete" />
+        </span>
+        <span class="epi-cmsButton">
+            @Html.ActionLink("Cancel", "Index", new { page = ViewBag.Page, searchString = ViewBag.SearchString }, new { @class = "epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Cancel" })
+        </span>
+    </div>
+}

@@ -1,0 +1,48 @@
+﻿@using System.Web.Optimization
+@model TestSite.Models.Account.RegisterViewModel
+@{
+    ViewBag.Title = "Create a new account";
+    Layout = "~/Views/Shared/Layouts/_LayoutIdentity.cshtml";
+}
+
+<div class="epi-contentArea">
+    <h3 class="EP-prefix"> @ViewBag.Title</h3>
+</div>
+
+@using (Html.BeginForm("Register", "Identity", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <p class="text-success">@ViewBag.StatusMessage</p>
+    @Html.ValidationSummary()
+    <div class="epi-size30">
+        @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.UserName, new { @class = "episize200" })
+        </div>
+    </div>
+    <div class="epi-size30">
+        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.Password, new { @class = "episize200" })
+        </div>
+    </div>
+    <div class="epi-size30">
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "episize200" })
+        </div>
+    </div>
+    <br />
+    <div class="epi-size30">
+        <div class="epi-buttonContainer">
+            <span class="epi-cmsButton">
+                <input type="submit" class="epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Save" value="Register" />
+            </span>
+            <span class="epi-cmsButton">
+                @Html.ActionLink("Cancel", "Index", "Identity", new { @class = "epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Cancel", role = "form" })
+            </span>
+        </div>
+    </div>
+}
+
+

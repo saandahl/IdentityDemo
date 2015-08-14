@@ -1,0 +1,62 @@
+﻿@model PagedList.IPagedList<TestSite.Models.Account.ApplicationUser>
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Account overview";
+    Layout = "~/Views/Shared/Layouts/_LayoutIdentity.cshtml";
+}
+
+<div class="epi-contentArea">
+    <h3 class="EP-prefix"> @ViewBag.Title</h3>
+</div>
+
+@using (Html.BeginForm("Index", "Identity", FormMethod.Get))
+{
+    <p>
+        Find by username: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+<p>
+    Total users: @ViewBag.TotalCount
+</p>
+<p class="EP-systemInfo">@ViewBag.StatusMessage</p>
+
+<div class="epi-contentContainer epi-padding-large">
+    <table id="FullRegion_DatabaseTable" class="epi-default">
+        <tbody>
+        <tr>
+            <th colspan=2>
+                UserName
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td width="40%">
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    <span class="epi-cmsButton"> 
+                        @Ajax.ActionLink("Edit", "EditUser", new { id = item.Id, page = Model.PageNumber, searchString = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "ajaxBody" }, new { @class = "epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Edit" })
+                    </span>
+                    <span class="epi-cmsButton">
+                        @Ajax.ActionLink("Delete", "DeleteUser", new { id = item.Id, page = Model.PageNumber, searchString = ViewBag.CurrentFilter }, new AjaxOptions { UpdateTargetId = "ajaxBody" }, new { @class = "epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Delete" })
+                    </span>
+                    <span class="epi-cmsButton">
+                        @Html.ActionLink("Roles for user", "ManageUserRoles", new { id = item.Id, page = Model.PageNumber, searchString = ViewBag.CurrentFilter }, new { @class = "epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-AddUserGroup" })
+                    </span>
+                    <span class="epi-cmsButton">
+                        @Html.ActionLink("Change password", "ChangePassword", new { id = item.Id, page = Model.PageNumber, searchString = ViewBag.CurrentFilter }, new { @class = "epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Edit" })
+                    </span>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <br />
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, currentFilter = ViewBag.CurrentFilter }))
+</div>

@@ -1,0 +1,89 @@
+﻿@using System.Web.Optimization
+@model TestSite.Models.Account.LoginViewModel
+
+@{
+    ViewBag.Title = "Log in";
+    Layout = null;
+}
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<link type="text/css" rel="stylesheet" href="/util/styles/login.css" />
+<meta name="robots" content="noindex,nofollow" />
+
+<link href="../App_Themes/Default/Styles/system.css" type="text/css" rel="stylesheet" />
+<link href="../App_Themes/Default/Styles/ToolButton.css" type="text/css" rel="stylesheet" />
+
+
+<body class="epi-loginBody">
+
+    <div class="epi-loginContainer">
+        <div id="FullRegion_LoginControl">
+
+            <div class="epi-loginTop">
+            </div>
+            <div class="epi-loginMiddle">
+                <div class="epi-loginContent">
+                    <div class="epi-loginLogo">@ViewBag.Title.</div>
+                    <div class="epi-loginForm">
+                        <h1><span style="color: Red;"></span></h1>
+
+                        <div id="FullRegion_LoginControl_ValidationSummary1" style="display: none;">
+
+                        </div>
+                        <div class="epi-credentialsContainer">
+
+
+                            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+
+                                @Html.ValidationSummary(true)
+                                <div class="epi-float-left">
+                                    @Html.LabelFor(m => m.UserName, new { @class = "episize80" })
+                                    <br />
+                                    <div class="">
+                                        @Html.TextBoxFor(m => m.UserName, new { @class = "epi-inputText" })
+                                        @Html.ValidationMessageFor(m => m.UserName)
+                                    </div>
+                                    <span id="FullRegion_LoginControl_RequiredFieldValidator1" style="display: none;">­</span>
+                                </div>
+
+                                <div class="epi-float-left">
+                                    @Html.LabelFor(m => m.Password, new { @class = "episize80" })
+                                    <br />
+                                    <div class="">
+                                        @Html.PasswordFor(m => m.Password, new { @class = "epi-inputText" })
+                                        @Html.ValidationMessageFor(m => m.Password)
+                                    </div>
+                                    <span id="FullRegion_LoginControl_RequiredFieldValidator2" style="display: none;">­</span>
+                                </div>
+
+                                <div class="epi-button-container epi-float-left">
+                                    <span class="epi-button">
+                                        <span class="epi-button-child">
+                                            <input type="submit" value="Log in" class="epi-button-child-item" />
+                                        </span>
+                                    </span>
+                                </div>
+                                <div class="epi-checkbox-container">
+                                    <span class="epi-checkbox">
+                                        @Html.CheckBoxFor(m => m.RememberMe)
+                                        @Html.LabelFor(m => m.RememberMe)
+                                    </span>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+                <div class="epi-loginBottom">
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

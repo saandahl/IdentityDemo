@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+@{
+    ViewBag.Title = "Manage Roles";
+    Layout = "~/Views/Shared/Layouts/_LayoutIdentity.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<hr/>
+@using (Html.BeginForm("ManageRoles", "Identity", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div>
+        Role name
+    </div>
+    <p>
+        @Html.TextBox("RoleName")
+    </p>
+    <span class="epi-cmsButton">
+        <input type="submit" class="epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Save" value="Save" />
+    </span>
+}
+
+<div class="epi-contentContainer epi-padding-large">
+    <table id="FullRegion_DatabaseTable" class="epi-default">
+        <tbody>
+            <tr>
+                <th colspan=2>
+                    Roles
+                </th>
+            </tr>
+            @foreach (var role in Model)
+            {
+                <tr>
+                    <td width="50%">
+                        @role.Name
+                    </td>
+                    <td>
+                        <span class="epi-cmsButton">
+                            @Ajax.ActionLink("Edit Role", "EditRole", new { RoleName = @role.Name }, new AjaxOptions { UpdateTargetId = "ajaxBody" }, new { @class = "epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Edit" })
+                        </span>
+                        <span class="epi-cmsButton">
+                            @Html.ActionLink("Delete", "DeleteRole", new { RoleName = @role.Name }, new { @class = "epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Delete", role = "form" })
+                        </span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

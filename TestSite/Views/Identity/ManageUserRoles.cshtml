@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "Manage User Roles";
+    Layout = "~/Views/Shared/Layouts/_LayoutIdentity.cshtml";
+}
+
+<div class="epi-contentArea">
+    <h3 class="EP-prefix"> @ViewBag.Title</h3>
+    <p class="EP-systemInfo">Add role to User</p>
+</div>
+
+
+@using (Html.BeginForm("RoleAddToUser", "Identity"))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <p>
+        Username : @Html.TextBox("UserName")
+        Role Name: @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, "Select ...")
+    </p>
+
+    <span class="epi-cmsButton">
+        <input type="submit" class="epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Save" value="Add" />
+    </span>
+}
+
+@if (ViewBag.RolesForThisUser != null)
+{
+<div class="epi-contentContainer epi-padding-large">
+    <table id="FullRegion_DatabaseTable" class="epi-default">
+        <tbody>
+            <tr>
+                <th colspan=2>
+                    Roles for User
+                </th>
+            </tr>
+           @foreach (string s in ViewBag.RolesForThisUser)
+           {
+                <tr>
+                    <td width="50%">
+                        @s
+                    </td>
+                    <td>
+                        <span class="epi-cmsButton">
+                            @Ajax.ActionLink("Delete", "DeleteRoleForUser", new { UserName = ViewBag.UserName, RoleName = @s }, new AjaxOptions { UpdateTargetId = "ajaxBody" }, new { @class = "epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Delete" })
+                        </span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+}
+
+<span class="epi-cmsButton">
+    @Html.ActionLink("Back", "Index", new { page = ViewBag.Page, searchString = ViewBag.SearchString }, new { @class = "epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Cancel" })
+</span>

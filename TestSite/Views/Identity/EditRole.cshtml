@@ -1,0 +1,29 @@
+﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
+@{
+    ViewBag.Title = "Edit role";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<hr />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.Id)
+    <div>
+        Role name
+    </div>
+    <p>
+        @Html.TextBoxFor(model => model.Name)
+    </p>
+    <div class="epi-buttonContainer">
+        <span class="epi-cmsButton">
+            <input type="submit" class="epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Save" value="Save" />
+        </span>
+        <span class="epi-cmsButton">
+            @Html.ActionLink("Cancel", "ManageRoles", "Identity", new { @class = "epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Cancel" })
+        </span>
+    </div>
+}
+
