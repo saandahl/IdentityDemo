@@ -125,12 +125,12 @@ namespace TestSite.Controllers
 
         [HttpPost]
         public ActionResult ChangePassword(ChangePasswordViewModel model, int? page, string searchString, string id)
-        {          
+        {
             ApplicationUser user = _db.Users.Find(id);
 
             if (user == null)
             {
-                ViewBag.ResultMessage = "User don't exist!";
+                ViewBag.ResultMessage = "User doesn't exist!";
                 return PartialView(model);
             }
 
@@ -141,20 +141,30 @@ namespace TestSite.Controllers
 
             if (ModelState.IsValid)
             {
-                if (UserManager.HasPassword(user.Id))
-                    UserManager.RemovePassword(user.Id);
-
-                var result = UserManager.AddPassword(user.Id, model.NewPassword);
-
-                if (result.Succeeded)
+                var isNewPasswordValid = UserManager.PasswordValidator.ValidateAsync(model.NewPassword).Result;
+                if (isNewPasswordValid.Succeeded)
                 {
-                    _db.Users.AddOrUpdate(user);
-                    _db.SaveChanges();
-                    ViewBag.StatusMessage = "User updated!";
+                    if (UserManager.HasPassword(user.Id))
+                        UserManager.RemovePassword(user.Id);
 
-                    return RedirectToAction("Index", new { page = page, searchString = searchString });
+
+                    var result = UserManager.AddPassword(user.Id, model.NewPassword);
+
+                    if (result.Succeeded)
+                    {
+                        _db.Users.AddOrUpdate(user);
+                        _db.SaveChanges();
+                        ViewBag.StatusMessage = "User updated!";
+
+                        return RedirectToAction("Index", new { page = page, searchString = searchString });
+                    }
+                    AddErrors(result);
                 }
-                AddErrors(result);
+                else
+                {
+                    AddErrors(isNewPasswordValid);
+                }
+                
             }
             return PartialView(model);
         }
